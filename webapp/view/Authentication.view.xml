@@ -1,0 +1,15 @@
+<mvc:View controllerName="com.iot.ui5-ms-graph.controller.Authentication" 
+	xmlns:mvc="sap.ui.core.mvc" displayBlock="true" 
+	xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<headerContent>
+						<Button text="Sign In" press="signIn"/>
+					</headerContent>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
