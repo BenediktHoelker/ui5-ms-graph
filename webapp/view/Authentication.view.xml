@@ -7,7 +7,7 @@
 				<Page id="page" title="{i18n>title}">
 
 					<headerContent>
-						<Button icon="sap-icon://person-placeholder" text="{= ${session>/userData} === undefined ? 'Login' : 'Logout ' + ${session>/userData/givenName}}" press="signIn"/>
+						<Button icon="sap-icon://person-placeholder" text="{= ${session>/userData} === undefined ? 'Login' : 'Logout ' + ${session>/userData/givenName}}" press="onSwitchSession"/>
 					</headerContent>
 				</Page>
 			</pages>
