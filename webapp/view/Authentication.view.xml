@@ -5,8 +5,9 @@
 		<App id="app">
 			<pages>
 				<Page id="page" title="{i18n>title}">
+
 					<headerContent>
-						<Button text="Sign In" press="signIn"/>
+						<Button icon="sap-icon://person-placeholder" text="{= ${session>/userData} === undefined ? 'Login' : 'Logout ' + ${session>/userData/givenName}}" press="signIn"/>
 					</headerContent>
 				</Page>
 			</pages>
