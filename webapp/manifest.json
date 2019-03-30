@@ -63,6 +63,11 @@
 				"type": "sap.ui.model.json.JSONModel",
 				"settings": {},
 				"preload": false
+			},
+			"": {
+				"type": "sap.ui.model.json.JSONModel",
+				"settings": {},
+				"preload": true
 			}
 		},
 		"resources": {
