@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@microsoft/microsoft-graph-client": "^1.5.2",
     "@openui5/sap.m": "^1.64.0",
     "@openui5/sap.ui.core": "^1.64.0",
     "@openui5/sap.ui.layout": "^1.64.0",

@@ -45,6 +45,17 @@ sap.ui.define(
           })
           .then(res => res.json())
           .then(response => sessionModel.setProperty("/userData", response));
+      },
+
+      queryEvents: function() {
+				var sessionModel = this.getOwnerComponent().getModel("session");
+				var accessToken = sessionModel.getProperty("/token");
+        fetch(applicationConfig.graphEndpoint + "/calendar/events", {
+          method: "GET", // or 'PUT'
+          headers: { Authorization: "Bearer " + accessToken }
+        })
+          .then(res => res.json())
+          .then(response => sessionModel.setProperty("/events", response));
       }
     });
   }
