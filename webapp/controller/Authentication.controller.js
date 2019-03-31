@@ -43,6 +43,18 @@ sap.ui.define(
         this._queryEvents(oDateRange);
       },
 
+      navToTable: function() {
+        var oNavContainer = this.byId("navContainer");
+        var oTablePage = this.byId("tablePage");
+        oNavContainer.to(oTablePage);
+      },
+
+      navToCalendar: function() {
+        var oNavContainer = this.byId("navContainer");
+        var oCalendarPage = this.byId("calendarPage");
+        oNavContainer.back(oCalendarPage);
+      },
+
       _getCalendarDateRange: function() {
         var oCalendar = this.byId("PC1");
         var oDateRange = oCalendar._getFirstAndLastRangeDate();
