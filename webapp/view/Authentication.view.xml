@@ -6,41 +6,17 @@
 	<Shell id="shell">
 		<App id="app">
 			<pages>
-				<Page id="page" title="{i18n>title}">
+				<Page id="page" title="Arbeitszeit">
 					<headerContent>
 						<Button icon="sap-icon://person-placeholder" text="{= ${session>/userData} === undefined ? 'Login' : 'Logout ' + ${session>/userData/givenName}}" press="onSwitchSession"/>
-						<Button text="Query Events" press="queryEvents"/>
-						<Button text="On Query" press="onQuery"/>
 					</headerContent>
 					<content>
-						<VBox class="sapUiSmallMargin">
-							<PlanningCalendar id="PC1" startDate="{path: 'session>/currentDateTime'}" appointmentsVisualization="Filled" appointmentSelect="handleAppointmentSelect" showEmptyIntervalHeaders="false" showWeekNumbers="true">
-								<toolbarContent>
-									<Title text="Title" titleStyle="H4"/>
-								</toolbarContent>
-								<rows>
-									<PlanningCalendarRow icon="sap-icon://person-placeholder" title="{session>/userData/givenName}" appointments="{path : '/', templateShareable: 'true'}">
-										<customData>
-											<core:CustomData key="emp-name" value="{name}" writeToDom="true"/>
-										</customData>
-										<appointments>
-											<unified:CalendarAppointment startDate="{start}" endDate="{end}" icon="{pic}" title="{subject}" text="{location/displayName}" tentative="{tentative}">
-											</unified:CalendarAppointment>
-										</appointments>
-									</PlanningCalendarRow>
-								</rows>
-							</PlanningCalendar>
-							<Label text="Add available built-in views to the example:"/>
-							<MultiComboBox selectionFinish="handleSelectionFinish" width="230px" placeholder="Choose built-in views">
-								<items>
-									<core:Item key="Hour" text="Hour" />
-									<core:Item key="Day" text="Day" />
-									<core:Item key="Month" text="Month" />
-									<core:Item key="Week" text="1 week" />
-									<core:Item key="One Month" text="1 month" />
-								</items>
-							</MultiComboBox>
-						</VBox>
+						<SinglePlanningCalendar id="PC1" startDateChange="onStartDateChange" headerDateSelect="onHeaderDateSelect" startDate="{session>/startDate}" appointmentSelect="handleAppointmentSelect" appointments="{path : '/'}">
+							<appointments>
+								<CalendarAppointment startDate="{start}" endDate="{end}" icon="{pic}" title="{subject}" text="{location/displayName}" tentative="{tentative}">
+								</CalendarAppointment>
+							</appointments>
+						</SinglePlanningCalendar>
 					</content>
 				</Page>
 			</pages>

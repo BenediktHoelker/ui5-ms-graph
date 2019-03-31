@@ -12,23 +12,17 @@ sap.ui.define(
 
     return Controller.extend("com.iot.ui5-ms-graph.controller.InitialView", {
       onInit: function() {
+        var date = new Date();
+
+        date.setDate(date.getDate() - 14);
+
         var sessionModel = this.getOwnerComponent().getModel("session");
         var eventsModel = this.getOwnerComponent().getModel();
-        sessionModel.setProperty(
-          "/currentDateTime",
-          new Date("2017", "03", "10", "0", "0")
-        );
-        sessionModel.setProperty("/", [
-          {
-            start: new Date("2017", "03", "10", "0", "0"),
-            end: new Date("2017", "05", "16", "23", "59"),
-            title: "Vacation",
-            info: "out of office",
-            type: "Type04",
-            tentative: false
-          }
-        ]);
-        this._signIn();
+        sessionModel.setProperty("/startDate", date);
+        this._signIn().then(() => {
+          var oDateRange = this._getCalendarDateRange();
+          this._queryEvents(oDateRange);
+        });
       },
 
       onSwitchSession: function() {
@@ -44,10 +38,23 @@ sap.ui.define(
         }
       },
 
+      onStartDateChange: function(oEvent) {
+        var oDateRange = this._getCalendarDateRange();
+        this._queryEvents(oDateRange);
+      },
+
+      _getCalendarDateRange: function() {
+        var oCalendar = this.byId("PC1");
+        var oDateRange = oCalendar._getFirstAndLastRangeDate();
+        var oStartDate = oDateRange.oStartDate._oUDate.oDate.toISOString();
+        var oEndDate = oDateRange.oEndDate._oUDate.oDate.toISOString();
+        return { startDate: oStartDate, endDate: oEndDate };
+      },
+
       _signIn: function() {
         var sessionModel = this.getOwnerComponent().getModel("session");
 
-        myMSALObj
+        return myMSALObj
           .acquireTokenSilent(applicationConfig.graphScopes)
           .then(function(accessToken) {
             sessionModel.setProperty("/token", accessToken);
@@ -63,31 +70,21 @@ sap.ui.define(
           .then(response => sessionModel.setProperty("/userData", response));
       },
 
-      onQuery: function() {
-        var eventsModel = this.getOwnerComponent().getModel();
-        eventsModel.setProperty("/", [
-          {
-            start: new Date("2017", "0", "8", "08", "30"),
-            end: new Date("2017", "0", "8", "09", "30"),
-            title: "Meet Max Mustermann",
-            type: "Type02",
-            tentative: false
-          }
-        ]);
-      },
-
-      queryEvents: function() {
+      _queryEvents: function(dateRange) {
         var eventsModel = this.getOwnerComponent().getModel();
         var sessionModel = this.getOwnerComponent().getModel("session");
         var accessToken = sessionModel.getProperty("/token");
-        fetch(applicationConfig.graphEndpoint + "/calendar/events", {
+        var sQuery = `/calendarview?startdatetime=${
+          dateRange.startDate
+        }&enddatetime=${dateRange.endDate}`;
+        return fetch(applicationConfig.graphEndpoint + sQuery, {
           method: "GET", // or 'PUT'
           headers: { Authorization: "Bearer " + accessToken }
         })
           .then(res => res.json())
           .then(response =>
             response.value
-              .filter(event => event.start.dateTime && event.end.dateTime)
+              // .filter(event => event.start.dateTime && event.end.dateTime)
               .map(event => {
                 return {
                   ...event,
@@ -96,9 +93,7 @@ sap.ui.define(
                 };
               })
           )
-          .then(events =>
-            eventsModel.setProperty("/", events)
-          );
+          .then(events => eventsModel.setProperty("/", events));
       }
     });
   }
