@@ -41,29 +41,38 @@
 								<Column>
 									<Text text="Location" />
 								</Column>
+								<Column>
+									<Text text="Customer" />
+								</Column>
 								<Column/>
-								</columns>
-								<items>
-									<ColumnListItem>
-										<cells>
-											<Text text="{
+							</columns>
+							<items>
+								<ColumnListItem>
+									<cells>
+										<Text text="{
 											path: 'start',
 											type: 'sap.ui.model.type.DateTime',
 											formatOptions: {style: 'medium'}}"/>
-											<Text text="{
+										<Text text="{
 											path: 'end',
 											type: 'sap.ui.model.type.DateTime',
 											formatOptions: {style: 'medium'}}"/>
-											<Text text="{subject}" />
-											<Text text="{location/displayName}" />
-											<Button text="Edit" press="onEditPress"/>
-											</cells>
-										</ColumnListItem>
-									</items>
-								</Table>
-							</content>
-						</Page>
-					</pages>
-				</NavContainer>
-			</Shell>
-		</mvc:View>
+										<Text text="{subject}" />
+										<Text text="{location/displayName}" />
+										<Select selectedKey="{categories/0}" change="onCategorySelect">
+											<core:Item key="Frankonia" text="Frankonia"/>
+											<core:Item key="Manufactum" text="Manufactum"/>
+											<core:Item key="Intorq" text="Intorq"/>
+											<core:Item key="Esprit" text="Esprit"/>
+										</Select>
+										<Button text="Edit" press="onEditPress"/>
+									</cells>
+								</ColumnListItem>
+							</items>
+						</Table>
+					</content>
+				</Page>
+			</pages>
+		</NavContainer>
+	</Shell>
+</mvc:View>

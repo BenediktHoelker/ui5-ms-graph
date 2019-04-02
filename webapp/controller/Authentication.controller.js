@@ -53,15 +53,41 @@ sap.ui.define(
           .getModel("session")
           .getProperty("/token");
 
-        return fetch(applicationConfig.graphEndpoint + `/events/${sId}`, {
+        this._updateEvent(
+          sId,
+          { subject: "[APP] " + object.subject },
+          accessToken
+        );
+      },
+
+      _updateEvent: function(eventId, update, accessToken) {
+        return fetch(applicationConfig.graphEndpoint + `/events/${eventId}`, {
           method: "PATCH", // or 'PUT'
           headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer " + accessToken
+            Authorization: "Bearer " + accessToken
           },
-          body: JSON.stringify({
-            "subject": "[APP] " + oObject.subject
-          })
+          body: JSON.stringify(update)
+        });
+      },
+
+      onCategorySelect: function(oEvent) {
+        var oListItem = oEvent.getSource();
+        var sSelectedKey = oListItem.getSelectedKey();
+        var oObject = oListItem.getBindingContext().getObject();
+
+        var sId = oObject.id;
+        var accessToken = this.getView()
+          .getModel("session")
+          .getProperty("/token");
+
+        this._updateEvent(
+          sId,
+          { categories: [sSelectedKey] },
+          accessToken
+        ).then(() => {
+          oObject.categories = [sSelectedKey];
+          this.getView().getModel().refresh(true);
         });
       },
 
