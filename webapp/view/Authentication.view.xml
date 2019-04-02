@@ -12,7 +12,12 @@
 						<Button icon="sap-icon://person-placeholder" text="{= ${session>/userData} === undefined ? 'Login' : 'Logout ' + ${session>/userData/givenName}}" press="onSwitchSession"/>
 					</headerContent>
 					<content>
-						<SinglePlanningCalendar id="PC1" startDateChange="onStartDateChange" headerDateSelect="onHeaderDateSelect" startDate="{session>/startDate}" appointmentSelect="handleAppointmentSelect" appointments="{path : '/'}">
+						<SinglePlanningCalendar id="PC1" title="My Calendar" startDateChange="onStartDateChange" headerDateSelect="onHeaderDateSelect" startDate="{session>/startDate}" appointmentSelect="handleAppointmentSelect" appointments="{path : '/'}">
+							<views>
+								<SinglePlanningCalendarWeekView key="WeekView" title="Week" />
+								<SinglePlanningCalendarWorkWeekView key="WorkWeekView" title="Work Week" />
+								<SinglePlanningCalendarDayView key="DayView" title="Day" />
+							</views>
 							<appointments>
 								<CalendarAppointment startDate="{start}" endDate="{end}" icon="{pic}" title="{subject}" text="{location/displayName}" tentative="{tentative}">
 								</CalendarAppointment>
@@ -36,27 +41,29 @@
 								<Column>
 									<Text text="Location" />
 								</Column>
-							</columns>
-							<items>
-								<ColumnListItem>
-									<cells>
-										<Text text="{
+								<Column/>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+											<Text text="{
 											path: 'start',
 											type: 'sap.ui.model.type.DateTime',
 											formatOptions: {style: 'medium'}}"/>
-										<Text text="{
+											<Text text="{
 											path: 'end',
 											type: 'sap.ui.model.type.DateTime',
 											formatOptions: {style: 'medium'}}"/>
-										<Text text="{subject}" />
-										<Text text="{location/displayName}" />
-									</cells>
-								</ColumnListItem>
-							</items>
-						</Table>
-					</content>
-				</Page>
-			</pages>
-		</NavContainer>
-	</Shell>
-</mvc:View>
+											<Text text="{subject}" />
+											<Text text="{location/displayName}" />
+											<Button text="Edit" press="onEditPress"/>
+											</cells>
+										</ColumnListItem>
+									</items>
+								</Table>
+							</content>
+						</Page>
+					</pages>
+				</NavContainer>
+			</Shell>
+		</mvc:View>

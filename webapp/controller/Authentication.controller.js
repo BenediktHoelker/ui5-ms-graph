@@ -43,6 +43,28 @@ sap.ui.define(
         this._queryEvents(oDateRange);
       },
 
+      onEditPress: function(oEvent) {
+        var oObject = oEvent
+          .getSource()
+          .getBindingContext()
+          .getObject();
+        var sId = oObject.id;
+        var accessToken = this.getView()
+          .getModel("session")
+          .getProperty("/token");
+
+        return fetch(applicationConfig.graphEndpoint + `/events/${sId}`, {
+          method: "PATCH", // or 'PUT'
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + accessToken
+          },
+          body: JSON.stringify({
+            "subject": "[APP] " + oObject.subject
+          })
+        });
+      },
+
       navToTable: function() {
         var oNavContainer = this.byId("navContainer");
         var oTablePage = this.byId("tablePage");
