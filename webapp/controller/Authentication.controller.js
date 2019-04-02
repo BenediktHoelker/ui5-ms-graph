@@ -78,7 +78,7 @@ sap.ui.define(
 
       onCategorySelect: function(oEvent) {
         var oListItem = oEvent.getSource();
-        var sSelectedKey = oListItem.getSelectedKey();
+        // var sSelectedKey = oListItem.getSelectedKey();
         var oObject = oListItem.getBindingContext().getObject();
 
         var sId = oObject.id;
@@ -88,13 +88,13 @@ sap.ui.define(
 
         this._updateEvent(
           sId,
-          { categories: [sSelectedKey] },
+          { categories: oObject.categories },
           accessToken
         ).then(() => {
-          oObject.categories = [sSelectedKey];
-          this.getView()
-            .getModel()
-            .refresh(true);
+          // oObject.categories = [sSelectedKey];
+          // this.getView()
+          //   .getModel()
+          //   .refresh(true);
         });
       },
 

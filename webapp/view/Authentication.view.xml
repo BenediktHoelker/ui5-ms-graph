@@ -44,7 +44,9 @@
 								<Column>
 									<Text text="Customer" />
 								</Column>
-								<Column/>
+								<Column>
+									<Text text="Project" />
+								</Column>
 							</columns>
 							<items>
 								<ColumnListItem>
@@ -65,7 +67,12 @@
 											<core:Item key="Intorq" text="Intorq"/>
 											<core:Item key="Esprit" text="Esprit"/>
 										</Select>
-										<Button text="Edit" press="onEditPress"/>
+										<Select selectedKey="{categories/1}" change="onCategorySelect">
+											<core:Item key="SAPCP" text="SAP Cloud Platform"/>
+											<core:Item key="ERP" text="ERP Update"/>
+											<core:Item key="CAR" text="CAR Einführung"/>
+										</Select>
+										<!-- <Button text="Edit" press="onEditPress"/> -->
 									</cells>
 								</ColumnListItem>
 							</items>
