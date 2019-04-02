@@ -19,7 +19,7 @@
 								<SinglePlanningCalendarDayView key="DayView" title="Day" />
 							</views>
 							<appointments>
-								<CalendarAppointment startDate="{start}" endDate="{end}" icon="{pic}" title="{subject}" text="{location/displayName}" tentative="{tentative}">
+								<CalendarAppointment startDate="{start}" endDate="{end}" icon="{pic}" title="{subject}" text="{location/displayName}" type="{path: 'categories/0', formatter: '.formatter.calendarDayType'}" tentative="{tentative}">
 								</CalendarAppointment>
 							</appointments>
 						</SinglePlanningCalendar>

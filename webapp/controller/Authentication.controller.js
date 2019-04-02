@@ -1,6 +1,10 @@
 sap.ui.define(
-  ["com/iot/ui5-ms-graph/msal/config", "sap/ui/core/mvc/Controller"],
-  function(applicationConfig, Controller) {
+  [
+    "com/iot/ui5-ms-graph/msal/config",
+    "sap/ui/core/mvc/Controller",
+    "com/iot/ui5-ms-graph/model/formatter"
+  ],
+  function(applicationConfig, Controller, formatter) {
     "use strict";
 
     var myMSALObj = new Msal.UserAgentApplication(
@@ -11,6 +15,7 @@ sap.ui.define(
     );
 
     return Controller.extend("com.iot.ui5-ms-graph.controller.InitialView", {
+      formatter: formatter,
       onInit: function() {
         var date = new Date();
 
@@ -87,7 +92,9 @@ sap.ui.define(
           accessToken
         ).then(() => {
           oObject.categories = [sSelectedKey];
-          this.getView().getModel().refresh(true);
+          this.getView()
+            .getModel()
+            .refresh(true);
         });
       },
 
