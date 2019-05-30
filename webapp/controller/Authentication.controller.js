@@ -143,7 +143,7 @@ sap.ui.define(
         var accessToken = sessionModel.getProperty("/token");
         var sQuery = `/calendarview?startdatetime=${
           dateRange.startDate
-        }&enddatetime=${dateRange.endDate}`;
+        }&enddatetime=${dateRange.endDate}&$top=200`;
         return fetch(applicationConfig.graphEndpoint + sQuery, {
           method: "GET", // or 'PUT'
           headers: { Authorization: "Bearer " + accessToken }
